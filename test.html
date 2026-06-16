@@ -1,48 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>GSMZ GLOB</title>
-<style>
-body {font-family: Arial; text-align:center; background:#111; color:#fff;}
-.banner {margin:10px auto; width:320px; height:50px; background:#333; display:flex; align-items:center; justify-content:center;}
-#btn {display:none; padding:10px 20px; background:red; color:white; border:none; cursor:pointer;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSMZ GLOB</title>
+    <style>
+        /* إعدادات التصميم العام ليتوافق مع الهواتف */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* لضمان مظهر ممتاز على الهواتف والكمبيوتر */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 2.5rem;
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        /* تنسيق المؤقت */
+        #timer-container {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #countdown {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.5rem;
+        }
+
+        /* تنسيق الزر المخفي */
+        #action-btn {
+            display: none; /* مخفي تلقائياً */
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            transition: transform 0.2s;
+            margin: 20px auto;
+            text-decoration: none;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        #action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* مساحات مخصصة لإعلانات البانر */
+        .banner-ad {
+            width: 100%;
+            min-height: 90px;
+            margin: 15px 0;
+            background-color: #e0e0e0; /* خلفية مؤقتة للبانر */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-<div class="banner">Banner Ad</div>
+    <div class="container">
 
-<h1>Welcome to GSMZ GLOB</h1>
+        <div class="banner-ad">
+            <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+        </div>
 
-<div id="timer">12</div>
-<p id="msg">Wait 12 seconds...</p>
+        <h1>GSMZ GLOB</h1>
 
-<button id="btn">Scroll Down</button>
+        <div class="banner-ad">
+            <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+        </div>
 
-<div class="banner">Banner Ad</div>
+        <div class="welcome-text">
+            Welcome to our platform! Please wait a moment.
+        </div>
 
-<p>All rights reserved GSMZ GLOB</p>
-<p>onirec@proton.me</p>
+        <div id="timer-container">
+            <span id="timer-message">Please wait <span id="countdown">12</span> seconds...</span>
+        </div>
 
-<div class="banner">Banner Ad</div>
+        <div class="banner-ad">
+            <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+        </div>
 
-<script>
-let t = 12;
-let x = setInterval(()=>{
-  t--;
-  document.getElementById("timer").innerText = t;
-  if(t<=0){
-    clearInterval(x);
-    document.getElementById("msg").innerText = "Scroll down";
-    document.getElementById("btn").style.display = "inline-block";
-  }
-},1000);
-</script>
+        <a href="#" id="action-btn">Click Here to Proceed</a>
 
-<script src="https://gsmzglob.github.io/scripts/1.js"></script>
-<script src="https://gsmzglob.github.io/scripts/6.js"></script>
-<script src="https://gsmzglob.github.io/scripts/5.js"></script>
+        <div class="banner-ad">
+            <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 GSMZ GLOB. All Rights Reserved.</p>
+            
+            <div class="banner-ad">
+                <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+            </div>
+            
+            <p>Contact us: <a href="mailto:onirec@proton.me">onirec@proton.me</a></p>
+        </footer>
+
+        <div class="banner-ad">
+            <script src="https://gsmzglob.github.io/scripts/1.js"></script>
+        </div>
+
+    </div>
+
+    <script>
+        let timeLeft = 12;
+        const countdownElement = document.getElementById('countdown');
+        const timerMessageElement = document.getElementById('timer-message');
+        const actionBtn = document.getElementById('action-btn');
+
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                // تغيير النص إلى "اهبط تحت" بالإنجليزية كما هو مطلوب لمحتوى الصفحة
+                timerMessageElement.innerHTML = "<strong>Scroll Down ↓</strong>";
+                
+                // إظهار الزر
+                actionBtn.style.display = 'block';
+            }
+        }, 1000);
+    </script>
+
+    <script src="https://gsmzglob.github.io/scripts/5.js"></script>
+
+    <script src="https://gsmzglob.github.io/scripts/6.js"></script>
 
 </body>
 </html>
