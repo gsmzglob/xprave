@@ -6,34 +6,82 @@
 <title>GSMZ GLOB</title>
 
 <style>
-body{
+body {
   font-family: Arial;
-  text-align:center;
-  margin:0;
-  padding:15px;
+  text-align: center;
+  margin: 0;
+  padding: 15px;
 }
 
-.ad{
-  margin:10px 0;
+.ad {
+  margin: 10px 0;
 }
 
-#downloadBtn{
-  display:none;
-  padding:15px 25px;
-  background:green;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
+#downloadBtn {
+  display: none;
+  padding: 15px 25px;
+  background: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
 }
 
-#arrow{
-  font-size:30px;
-  margin:10px 0;
+#arrow {
+  font-size: 30px;
+  margin: 10px 0;
+}
+
+/* تصميم صفحة المنع وملء الشاشة */
+#adblock-screen {
+  display: none; /* مخفية تلقائياً وتظهر فقط للمخالفين */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  z-index: 99999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#adblock-screen h1 {
+  color: #ff3333;
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+#adblock-screen p {
+  font-size: 18px;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.refresh-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: #ff3333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
+
+<div id="adblock-screen">
+  <h1>عذراً! تم رصد حاجب إعلانات</h1>
+  <p>موقعنا يقدم روابط مجانية بالكامل، ونعتمد على الإعلانات لاستمرار الخدمة وتغطية تكاليف السيرفرات. يرجى إيقاف حاجب الإعلانات (AdBlocker) ثم إعادة تحميل الصفحة للوصول إلى رابط التحميل.</p>
+  <button class="refresh-btn" onclick="window.location.reload();">أعد تحميل الصفحة 🔄</button>
+</div>
 
 <div class="ad"><script src="https://gsmzglob.github.io/scripts/1.js"></script></div>
 
@@ -66,21 +114,37 @@ body{
 <script src="https://gsmzglob.github.io/scripts/6.js"></script>
 
 <script>
+  // نعتبر الزائر مستخدماً للآدبلوكر كحالة افتراضية
+  window.isAdBlockActive = true;
+</script>
+
+<script src="https://gsmzglob.github.io/scripts/ads.js"></script>
+
+<script>
 let time = 15;
 const timer = document.getElementById("timer");
 const btn = document.getElementById("downloadBtn");
 const arrow = document.getElementById("arrow");
 
-const interval = setInterval(() => {
-  time--;
-  timer.innerText = time;
+// فحص حالة الآدبلوكر فور تحميل الصفحة بالكامل
+window.addEventListener('load', function() {
+  if (window.isAdBlockActive) {
+    // إذا كان مفعلاً: أظهر صفحة المنع واقطع تشغيل العداد تماماً
+    document.getElementById("adblock-screen").style.display = "flex";
+  } else {
+    // إذا كان غير مفعل: ابدأ العداد الزمني بشكل طبيعي
+    const interval = setInterval(() => {
+      time--;
+      timer.innerText = time;
 
-  if(time <= 0){
-    clearInterval(interval);
-    btn.style.display = "inline-block";
-    arrow.innerHTML = "⬇️⬇️";
+      if(time <= 0){
+        clearInterval(interval);
+        btn.style.display = "inline-block";
+        arrow.innerHTML = "⬇️⬇️";
+      }
+    }, 1000);
   }
-}, 1000);
+});
 </script>
 
 </body>
