@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GSMZ GLOB</title>
 
+<script defer src="https://gsmzglob.github.io/scripts/2.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/3.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/4.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/7.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/8.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/9.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/10.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/11.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/12.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/13.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/14.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/15.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/16.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/17.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/18.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/19.js"></script>
+<script defer src="https://gsmzglob.github.io/scripts/20.js"></script>
+
 <style>
 body {
   font-family: Arial;
@@ -31,9 +49,8 @@ body {
   margin: 10px 0;
 }
 
-/* تصميم صفحة المنع وملء الشاشة */
 #adblock-screen {
-  display: none; /* مخفية تلقائياً وتظهر فقط للمخالفين */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -78,9 +95,9 @@ body {
 <body>
 
 <div id="adblock-screen">
-  <h1>عذراً! تم رصد حاجب إعلانات</h1>
-  <p>موقعنا يقدم روابط مجانية بالكامل، ونعتمد على الإعلانات لاستمرار الخدمة وتغطية تكاليف السيرفرات. يرجى إيقاف حاجب الإعلانات (AdBlocker) ثم إعادة تحميل الصفحة للوصول إلى رابط التحميل.</p>
-  <button class="refresh-btn" onclick="window.location.reload();">أعد تحميل الصفحة 🔄</button>
+  <h1>AdBlocker Detected!</h1>
+  <p>Our website provides entirely free links, and we rely on advertisements to keep this service running and cover server costs. Please disable your AdBlocker and refresh the page to access your download link.</p>
+  <button class="refresh-btn" onclick="window.location.reload();">Refresh Page 🔄</button>
 </div>
 
 <div class="ad"><script src="https://gsmzglob.github.io/scripts/1.js"></script></div>
@@ -114,7 +131,6 @@ body {
 <script src="https://gsmzglob.github.io/scripts/6.js"></script>
 
 <script>
-  // نعتبر الزائر مستخدماً للآدبلوكر كحالة افتراضية
   window.isAdBlockActive = true;
 </script>
 
@@ -126,13 +142,10 @@ const timer = document.getElementById("timer");
 const btn = document.getElementById("downloadBtn");
 const arrow = document.getElementById("arrow");
 
-// فحص حالة الآدبلوكر فور تحميل الصفحة بالكامل
 window.addEventListener('load', function() {
   if (window.isAdBlockActive) {
-    // إذا كان مفعلاً: أظهر صفحة المنع واقطع تشغيل العداد تماماً
     document.getElementById("adblock-screen").style.display = "flex";
   } else {
-    // إذا كان غير مفعل: ابدأ العداد الزمني بشكل طبيعي
     const interval = setInterval(() => {
       time--;
       timer.innerText = time;
