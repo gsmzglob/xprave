@@ -8,10 +8,11 @@
   ins.setAttribute("data-domain", "//data527.click");
   ins.setAttribute("data-affquery", "/2d7a825db0aed0502e05/c9ac63b896/?placementName=banner");
 
+  document.body.appendChild(ins);
+
   const s = document.createElement("script");
   s.src = "//data527.click/js/responsive.js";
   s.async = true;
 
-  ins.appendChild(s);
-  document.currentScript.parentNode.insertBefore(ins, document.currentScript);
+  document.body.appendChild(s);
 })();
