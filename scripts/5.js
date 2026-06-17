@@ -1,5 +1,5 @@
 (function() {
-    const url = "https://data527.click/ec34ac29ab55efe4d2d2/45f8b49f0f/?placementName=gsmzlink";
+    const url = "https://www.effectivecpmnetwork.com/bk74jiwd?key=e732a41a62f28d6926f491b74ba4e49c";
     let canOpen = true;
 
     function createPopUnder() {
