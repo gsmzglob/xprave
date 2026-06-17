@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "https://www.google.com";
     });
 
-    // 4. مصفوفة الدول العربية شاملة المغرب (MA)
+    // 4. مصفوفة الدول العربية مصلحة بالكامل (أكواد ثنائية Capital)
     const allArabCountries = [
         'MA', 'DZ', 'BH', 'KM', 'DJ', 'EG', 'IQ', 'JO', 'KW', 'LB', 'LY', 
         'MR', 'OM', 'PS', 'QA', 'SA', 'SO', 'SD', 'SY', 'TN', 'AE', 'YE'
@@ -103,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             const userCountry = data.country_code;
 
-            // إذا كان الزائر من دولة عربية (بما فيها المغرب) يتم تفعيل الحجب
-            if (allArabCountries.includes(userCountry)) {
+            // التحقق من كود الدولة وتحويله لحروف كبيرة للتأكيد
+            if (userCountry && allArabCountries.includes(userCountry.toUpperCase())) {
                 document.getElementById('geoPopup').style.display = 'flex';
                 document.body.classList.add('popup-active');
             }
