@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donation Gateway</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:#0f172a;
+    color:#f8fafc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.donation-card{
+    background:#1e293b;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    width:100%;
+    max-width:480px;
+    text-align:center;
+    box-sizing:border-box;
+}
+
+h1{
+    font-size:24px;
+    margin-bottom:10px;
+    color:#38bdf8;
+}
+
+p{
+    color:#94a3b8;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    text-align:left;
+    margin-bottom:8px;
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+select,input{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #334155;
+    background:#0f172a;
+    color:#fff;
+    font-size:16px;
+    margin-bottom:20px;
+    box-sizing:border-box;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#38bdf8;
+}
+
+.btn-paypal{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#0070ba;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:8px;
+    font-weight:bold;
+    transition:.3s;
+    margin-bottom:20px;
+}
+
+.btn-paypal:hover{
+    background:#005ea6;
+}
+
+.divider{
+    height:1px;
+    background:#334155;
+    margin:20px 0;
+    position:relative;
+}
+
+.divider span{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#1e293b;
+    padding:0 15px;
+    color:#64748b;
+    font-size:12px;
+}
+
+.crypto-box{
+    background:#0f172a;
+    padding:15px;
+    border-radius:8px;
+    border:1px dashed #334155;
+    margin-top:15px;
+}
+
+.address-row{
+    display:flex;
+    align-items:center;
+    background:#1e293b;
+    border-radius:6px;
+    padding:5px;
+    margin-top:10px;
+}
+
+.address-text{
+    font-size:12px;
+    word-break:break-all;
+    padding:5px;
+    flex:1;
+    text-align:left;
+    font-family:monospace;
+    color:#e2e8f0;
+}
+
+.btn-copy{
+    background:#38bdf8;
+    color:#0f172a;
+    border:none;
+    padding:8px 12px;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.btn-copy:hover{
+    background:#0ea5e9;
+}
+
+.qr-container{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+}
+
+.qr-container img,
+#qrcode canvas{
+    background:white;
+    padding:10px;
+    border-radius:8px;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+<div class="donation-card">
+
+    <h1>Donation Gateway</h1>
+    <p>Support our project via PayPal or Cryptocurrencies</p>
+
+    <label>Donate via PayPal</label>
+
+    <a class="btn-paypal"
+       href="https://www.paypal.me/th3deeb"
+       target="_blank">
+       Donate with PayPal (@th3deeb)
+    </a>
+
+    <div class="divider">
+        <span>OR VIA CRYPTO</span>
+    </div>
+
+    <label for="cryptoSelect">Select Cryptocurrency:</label>
+
+    <select id="cryptoSelect" onchange="updateCryptoDetails()">
+        <option value="btc">Bitcoin (BTC)</option>
+        <option value="eth">Ethereum (ETH)</option>
+        <option value="sol">Solana (SOL)</option>
+        <option value="bnb">BNB Smart Chain (BNB)</option>
+        <option value="usdt_eth">USDT (ERC-20 / ETH)</option>
+        <option value="usdc_eth">USDC (ERC-20 / ETH)</option>
+        <option value="xrp">Ripple (XRP)</option>
+        <option value="usdt_bsc">USDT (BEP-20 / BSC)</option>
+        <option value="doge">Dogecoin (DOGE)</option>
+        <option value="trx">TRON (TRX)</option>
+        <option value="usdt_trx">USDT (TRC-20 / TRON)</option>
+        <option value="ton">Toncoin (TON)</option>
+        <option value="ltc">Litecoin (LTC)</option>
+        <option value="pol">POL (Polygon)</option>
+        <option value="bch">Bitcoin Cash (BCH)</option>
+        <option value="dash">Dash (DASH)</option>
+    </select>
+
+    <div class="crypto-box">
+
+        <label style="margin:0;color:#94a3b8;">
+            Official Wallet Address:
+        </label>
+
+        <div class="address-row">
+
+            <div class="address-text" id="cryptoAddress">
+                Loading...
+            </div>
+
+            <button class="btn-copy"
+                    id="copyBtn"
+                    onclick="copyAddress()">
+                Copy
+            </button>
+
+        </div>
+
+        <div class="qr-container">
+            <div id="qrcode"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const wallets = {
+    btc: "bc1qjt6v3jekw4qpwhapauhzl3afmgcxacuzy9a8jk",
+    eth: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    sol: "HC3kDNX2zYPqsHy1YxPDjm95SkAxVR7e78gcAVmxYZ2E",
+    bnb: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    usdt_eth: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    usdc_eth: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    xrp: "rDjqiGNCDFZTEx5BeQ4PhE148TZkeggmAQ",
+    usdt_bsc: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    doge: "D81QEVwBNmckcaKBCcUFvir33CXZC3vHLM",
+    trx: "TLZDipgYt8CuNSyePJvTwWy3AifragmumC",
+    usdt_trx: "TLZDipgYt8CuNSyePJvTwWy3AifragmumC",
+    ton: "UQARuM8l4iDJ7nfeJ4VA41vCWYwIPEM_u76y0oTDdNhmZbdr",
+    ltc: "ltc1q98jtdl56yrq3pj4wfxhm4jjrjeaakq65yt60l7",
+    pol: "0x5209a55490abf2b45f68f45ce74fa187590d7ee1",
+    bch: "bitcoincash:qzcyh77dw39z6kcut0dtus0hfpadkvmz4uerwd24yh",
+    dash: "XcGS1vRbC9ji2V5kTQL58FReFd5AbH3MfN"
+};
+
+let qrcodeViewer;
+
+function updateCryptoDetails(){
+
+    const selected =
+        document.getElementById("cryptoSelect").value;
+
+    const address = wallets[selected];
+
+    document.getElementById("cryptoAddress").innerText = address;
+
+    document.getElementById("qrcode").innerHTML = "";
+
+    qrcodeViewer = new QRCode(
+        document.getElementById("qrcode"),
+        {
+            text: address,
+            width:150,
+            height:150,
+            colorDark:"#000000",
+            colorLight:"#ffffff",
+            correctLevel:QRCode.CorrectLevel.H
+        }
+    );
+}
+
+function copyAddress(){
+
+    const addressText =
+        document.getElementById("cryptoAddress").innerText;
+
+    navigator.clipboard.writeText(addressText).then(() => {
+
+        const copyBtn =
+            document.getElementById("copyBtn");
+
+        copyBtn.innerText = "Copied!";
+        copyBtn.style.background = "#4ade80";
+
+        setTimeout(() => {
+            copyBtn.innerText = "Copy";
+            copyBtn.style.background = "#38bdf8";
+        }, 2000);
+
+    });
+
+}
+
+window.onload = function(){
+    updateCryptoDetails();
+};
+</script>
+
+</body>
+</html>
